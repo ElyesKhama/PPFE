@@ -53,4 +53,11 @@ public class Warning {
 		this.idPurchase = idPurchase;
 	}
 
+	@Override
+	public String toString() {
+		return "WARNING WITH PRIORITY :"+this.priority;
+	}
+	
+	
+
 }
