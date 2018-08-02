@@ -20,7 +20,6 @@ import com.ppfe.servlets.IndexServlet;
 public class JobCreateWarning extends EJB3InvokerJob implements Job {
 	private static final Logger logger = LoggerFactory.getLogger(IndexServlet.class);
 
-
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		logger.info("--- Job Execution (Quartz) ---");
@@ -28,18 +27,11 @@ public class JobCreateWarning extends EJB3InvokerJob implements Job {
 			ArrayList<Purchase> listPurchasesToday = new ArrayList<Purchase>();
 			ArrayList<Purchase> listPurchasesYesterday = new ArrayList<Purchase>();
 			ArrayList<Warning> listWarnings = new ArrayList<Warning>();
-
-			Object[] args = initializationDataMapArgs("today");
-			Class[] argsClass = initializationDataMapArgsClass(String.class);
-			JobDataMap dataMap = initializationDataMap(arg0, "read", args, argsClass,"PurchaseDAO");
-
-			super.execute(arg0);
+			
+			executeMethod(arg0,"today",String.class,"read","PurchaseDAO");
 			listPurchasesToday = (ArrayList<Purchase>) arg0.getResult();
-
-			args = initializationDataMapArgs("yesterday");
-			dataMap = initializationDataMap(arg0, "read", args, argsClass,"PurchaseDAO");
-			super.execute(arg0);
-
+			
+			executeMethod(arg0,"yesterday",String.class,"read","PurchaseDAO");
 			listPurchasesYesterday = (ArrayList<Purchase>) arg0.getResult();
 
 			CheckWarning check = new CheckWarning(listPurchasesToday, listPurchasesYesterday);
@@ -47,10 +39,7 @@ public class JobCreateWarning extends EJB3InvokerJob implements Job {
 
 			int i;
 			for (i = 0; i < listWarnings.size(); i++) {
-				args = initializationDataMapArgs(listWarnings.get(i));
-				argsClass = initializationDataMapArgsClass(Warning.class);
-				dataMap = initializationDataMap(arg0, "create", args, argsClass,"WarningDAO");
-				super.execute(arg0);
+				executeMethod(arg0,listWarnings.get(i),Warning.class,"create","WarningDAO");
 			}
 
 		} catch (JobExecutionException e) {
@@ -58,10 +47,18 @@ public class JobCreateWarning extends EJB3InvokerJob implements Job {
 		}
 	}
 
+	public void executeMethod(JobExecutionContext context, Object arg, Class argClass, String nameMethod,
+			String nameEntityDAO) throws JobExecutionException {
+		Object[] args = initializationDataMapArgs(arg);
+		Class[] argsClass = initializationDataMapArgsClass(argClass);
+		JobDataMap dataMap = initializationDataMap(context, nameMethod, args, argsClass, nameEntityDAO);
+		super.execute(context);
+	}
+
 	public static JobDataMap initializationDataMap(JobExecutionContext context, String nameMethod, Object[] args,
-			Class[] argsClass,String nameEntityDAO) {
+			Class[] argsClass, String nameEntityDAO) {
 		JobDataMap dataMap = context.getMergedJobDataMap();
-		dataMap.put(EJB_JNDI_NAME_KEY, "java:global/PPFE/"+nameEntityDAO+"!com.ppfe.dao."+nameEntityDAO);
+		dataMap.put(EJB_JNDI_NAME_KEY, "java:global/PPFE/" + nameEntityDAO + "!com.ppfe.dao." + nameEntityDAO);
 		dataMap.put(EJB_METHOD_KEY, nameMethod);
 		dataMap.put(EJB_ARGS_KEY, args);
 		dataMap.put(EJB_ARG_TYPES_KEY, argsClass);
