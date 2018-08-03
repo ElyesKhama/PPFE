@@ -10,7 +10,6 @@
 		<jta-data-source>java:/MySqlDS</jta-data-source>
 		<class>com.ppfe.entities.Purchase</class>
 		<properties>
-			<property name="show_sql" value="true" />
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="db_ppfe_pu_voucher_type"
@@ -18,7 +17,6 @@
 		<jta-data-source>java:/MySqlDS</jta-data-source>
 		<class>com.ppfe.entities.VoucherType</class>
 		<properties>
-			<property name="show_sql" value="true" />
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="db_ppfe_pu_warning"
@@ -26,7 +24,6 @@
 		<jta-data-source>java:/MySqlDS</jta-data-source>
 		<class>com.ppfe.entities.Warning</class>
 		<properties>
-			<property name="show_sql" value="true" />
 		</properties>
 	</persistence-unit>
 </persistence>

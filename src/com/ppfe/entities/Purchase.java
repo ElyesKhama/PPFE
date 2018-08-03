@@ -2,11 +2,14 @@ package com.ppfe.entities;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,8 +23,12 @@ public class Purchase {
 	private Date dateDay;
 	@Column(name = "count_total")
 	private int countTotal;
-	@Column(name = "id_voucher")
-	private Long idVoucher;
+/*	@Column(name = "id_voucher")
+	private Long idVoucher;*/
+	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+	@JoinColumn(name = "id_voucher")
+	private VoucherType voucherType;
+
 
 	public Long getId() {
 		return id;
@@ -47,16 +54,25 @@ public class Purchase {
 		this.countTotal = countTotal;
 	}
 
-	public Long getIdVoucher() {
+/*	public Long getIdVoucher() {
 		return idVoucher;
 	}
 
 	public void setIdVoucher(Long idVoucher) {
 		this.idVoucher = idVoucher;
-	}
+	}*/
 
 	public String toString() {
-		return "Voici le purchase avec l'ID : "+this.id.toString();
-		
+		return "Voici le purchase avec l'ID : " + this.id.toString();
 	}
+
+	public VoucherType getVoucherType() {
+		return voucherType;
+	}
+
+	public void setVoucherType(VoucherType voucherType) {
+		this.voucherType = voucherType;
+	}
+	
+	
 }

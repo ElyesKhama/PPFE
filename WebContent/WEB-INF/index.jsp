@@ -6,13 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Index</title>
+ <link rel="stylesheet" type="text/css" href="inc/bootstrap/bootstrap.min.css"/>
 </head>
 <body>
 	<h1>Index</h1>
 	<h2> List of all purchases : </h2>
-	<c:out value="${sessionScope.listePurchases}"/>
-	<c:forEach items="${param.listePurchases}" var="news">
-		<c:out value="${news.dateDay}"/>
+	<c:forEach items="${sessionScope.listePurchases}" var="p">
+		<c:out value="${p.id}"/>
+		<c:out value="${p.countTotal}"/>
+		<c:out value="${p.dateDay}"/>
+		<br/>
 	</c:forEach>
+<script type="text/javascript" src="inc/bootstrap/bootstrap.min.js"></script>
 </body>
 </html>

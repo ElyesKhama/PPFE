@@ -18,7 +18,7 @@
                                 <job-name>JobCreateWarning</job-name>
                                 <job-group>MYJOB_GROUP</job-group>
                                 <!-- trigger every -->
-                                <cron-expression>0 * * * * ?</cron-expression>
+                                <cron-expression>0 * 16 * * ?</cron-expression>
                         </cron>
                 </trigger>
         </schedule>

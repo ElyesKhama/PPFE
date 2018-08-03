@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
+import com.ppfe.business.JobCreateWarning;
 import com.ppfe.dao.PurchaseDAO;
 import com.ppfe.entities.Purchase;
 
@@ -22,7 +23,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static final String VUE = "/WEB-INF/index.jsp";
 	private static final String ATTRIBUTE_LIST_PURCHASES = "listePurchases";
-	private static final Logger logger = LoggerFactory.getLogger(IndexServlet.class);
+	private static final Logger logger = LogManager.getLogger(IndexServlet.class);
 	
 	@EJB
 	private PurchaseDAO purchaseDao;

@@ -1,5 +1,6 @@
 package com.ppfe.business;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.ejb.EJB;
@@ -37,10 +38,7 @@ public class CheckWarning {
 		this.context = context;
 	}
 
-	public ArrayList<Warning> compareLists() {
-		System.out.println("LES PURCHASES D'AUJOURDHUI SONT : \n" + listPurchasesToday.toString());
-		System.out.println("LES PURCHASES D'HIER SONT : \n" + listPurchasesYesterday.toString());
-
+	public ArrayList<Warning> comparePurchases() {
 		int i;
 		for (i = 0; i < listPurchasesToday.size(); i++) {
 			calculateDifference(listPurchasesToday.get(i), listPurchasesYesterday.get(i));
@@ -57,26 +55,25 @@ public class CheckWarning {
 		if (difference < DIFF_HIGH) {
 			priority = PRIORITY_HIGH;
 			war = true;
-			System.out.println("DIFF INF A 100 ICI ENTRE : " + pToday.toString() + "ET :" + pYesterday.toString());
 		} else if (difference < DIFF_MEDIUM) {
 			priority = PRIORITY_MEDIUM;
 			war = true;
-			System.out.println("DIFF INF A 50 ICI ENTRE : " + pToday.toString() + "ET :" + pYesterday.toString());
 		} else if (difference < DIFF_LOW) {
 			priority = PRIORITY_LOW;
 			war = true;
-			System.out.println("DIFF INF A 0 ICI ENTRE : " + pToday.toString() + "ET :" + pYesterday.toString());
 		}
 		if(war == true) {
-			addWarning(priority, difference, pToday.getId());
+			addWarning(priority, difference, pToday);
 		}
 	}
 
-	public void addWarning(String priority, int countDifference, Long idPurchase) {
+	public void addWarning(String priority, int countDifference, Purchase purchase) {
 		Warning warning = new Warning();
 		warning.setPriority(priority);
 		warning.setCountDifference(countDifference);
-		warning.setIdPurchase(idPurchase);
+		purchase.setId(purchase.getId());
+		warning.setPurchase(purchase);
+		warning.setDateDay(new Date(System.currentTimeMillis()));
 		listWarnings.add(warning);
 	}
 }

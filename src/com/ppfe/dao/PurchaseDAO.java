@@ -9,8 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import com.ppfe.entities.Purchase;
 import com.ppfe.servlets.IndexServlet;
@@ -24,7 +24,7 @@ public class PurchaseDAO {
 	private static final String QUERY_READ_ALL_PURCHASES = "SELECT u FROM Purchase u";
 	private static final String QUERY_READ_DAY_PURCHASES = "SELECT u FROM Purchase u WHERE u.dateDay = :dateDay";
 
-	private static final Logger logger = LoggerFactory.getLogger(PurchaseDAO.class);
+	private static final Logger logger = LogManager.getLogger(PurchaseDAO.class);
 
 	public void create(Purchase purchase) throws DAOException {
 		try {
