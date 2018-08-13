@@ -107,3 +107,55 @@ function removeHeadRow() {
 	var bodyHead = document.getElementById("headTableWarnings");
 	bodyHead.deleteRow(-1);
 }
+
+function updateChartPie(arrayWarning) {
+	var listVoucher = [];
+	var listCount = [];
+
+	// creation of the list of different vouchers
+	for (var i = 0; i < arrayWarning.length; i++) {
+		// TODO: see polyfill
+		if (!listVoucher.includes(arrayWarning[i].voucherType)) {
+			listVoucher.push(arrayWarning[i].voucherType);
+		}
+	}
+
+	// initialization of the count list to 0
+	for (var i = 0; i < listVoucher.length; i++) {
+		listCount[i] = 0;
+	}
+
+	// creation of the count list
+	for (var i = 0; i < arrayWarning.length; i++) {
+		for (var j = 0; j < listVoucher.length; j++) {
+			if (arrayWarning[i].voucherType == listVoucher[j]) {
+				listCount[j]++;
+			}
+		}
+	}
+	createChartPie(listVoucher, listCount);
+}
+
+function createChartPie(listVoucher, listCount) {
+	var ctx = document.getElementById("myChartPie").getContext('2d');
+	chartPie = new Chart(ctx, {
+		type : 'pie',
+		data : {
+			labels : listVoucher,
+			datasets : [ {
+				label : "Repartition of Warnings",
+				data : listCount,
+				backgroundColor : palette('tol', listCount.length).map(
+						function(hex) {
+							return '#' + hex;
+						})
+			} ],
+		},
+		options : {
+			title : {
+				display : true,
+				text : 'Repartition of Warnings'
+			}
+		}
+	});
+}
