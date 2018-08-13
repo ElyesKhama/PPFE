@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.warningContainer {
+	background-color: red;
+	max-width: 100px;
+}
+
+.numberWarning {
+	text-align: right;
+}
+
+.chart {
+	position: relative;
+	margin: auto;
+	height: 40vh;
+	width: 40vw;
+}
+
+#countWarningsDisplay {
+	text-align: center;
+	font-size: 40px;
+	color: white;
+}
+
+.tableWarn {
+	max-height: 350px;
+	overflow-y: scroll;
+}

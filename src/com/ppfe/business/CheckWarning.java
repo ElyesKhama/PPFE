@@ -52,13 +52,13 @@ public class CheckWarning {
 		boolean war = false;
 		difference = pToday.getCountTotal() - pYesterday.getCountTotal();
 		
-		if (difference < DIFF_HIGH) {
+		if (difference <= DIFF_HIGH) {
 			priority = PRIORITY_HIGH;
 			war = true;
-		} else if (difference < DIFF_MEDIUM) {
+		} else if (difference <= DIFF_MEDIUM) {
 			priority = PRIORITY_MEDIUM;
 			war = true;
-		} else if (difference < DIFF_LOW) {
+		} else if (difference <= DIFF_LOW) {
 			priority = PRIORITY_LOW;
 			war = true;
 		}

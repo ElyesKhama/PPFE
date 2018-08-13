@@ -48,6 +48,7 @@ public class PurchaseDAO {
 		//Conversion into java.sql.Date instead of java.util.Date (needed for query)
 		Date dateSql = new Date(dateUtil.getTime());
 
+		//TODO: GetTimeInMillis ??
 		try {
 			switch (choice) {
 			case "all":
@@ -58,7 +59,7 @@ public class PurchaseDAO {
 				query.setParameter("dateDay", dateSql);
 				break;
 			case "yesterday":
-				//Substraction of 1 Day to obtain the Date of yesterday
+				// Substraction of 1 Day to obtain the Date of yesterday
 				calendar.add(Calendar.DAY_OF_MONTH, -1);
 				dateUtil = calendar.getTime();
 				//Conversion into java.sql.Date instead of java.util.Date (needed for query)

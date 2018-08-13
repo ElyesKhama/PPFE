@@ -13,8 +13,16 @@
 		<servlet-name>Index</servlet-name>
 		<servlet-class>com.ppfe.servlets.IndexServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>AjaxServlet</servlet-name>
+		<servlet-class>com.ppfe.servlets.AjaxServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Index</servlet-name>
 		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AjaxServlet</servlet-name>
+		<url-pattern>/ajax</url-pattern>
 	</servlet-mapping>
 </web-app>
