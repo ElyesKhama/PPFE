@@ -38,7 +38,7 @@ function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
 	}
     } else {
 	updateChartLine(listTest1,listTest2);
-	updateChartPie(json);
+	updateChartPie(json, valueSelectFilterPie);
     }   
 }
 
@@ -75,11 +75,11 @@ function updateChartLine(label,data){
     addData(chartLine,label,data);
 }
 
-function updateChartPie(json){
+function updateChartPie(json, valueSelectFilterPie){
     console.log("updating chart pie");
 	removeData(chartPie);
 	
-	var listPie = createListLabelsCounts(json.listWarnings);
+	var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
 	addData(chartPie,listPie[0],listPie[1]);
 }
 
