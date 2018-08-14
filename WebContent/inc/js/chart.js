@@ -1,3 +1,5 @@
+//TODO: Singleton Pattern see how to store the json
+
 var chartLine = null;
 var chartPie = null;
 var nbMaxVoucher = 10;
@@ -8,7 +10,6 @@ function testAjax() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-
 			var json = JSON.parse(this.responseText);
 			updateTable(json.listWarnings);
 			manageCharts(json, valueSelectedDate, valueSelectFilterPie);
@@ -24,21 +25,24 @@ function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
     var listTest1 = json.listDayWarnings.reverse();
     var listTest2 = json.listCountWarnings.reverse();
 
-    
-    if( chartPie == null){
+    if( chartLine == null){
 	createChartLine(listTest1,listTest2);
 	var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
 	createChartPie(listPie[0],listPie[1]);
     }
 
     if (valueSelectedDate == "Today") {
-	if(chartLine != null && chartPie != null){
-            removeData(chartLine);
-            removeData(chartPie);
-	}
+	document.getElementById('myChartLine').style.visibility='hidden';
+	document.getElementById('myChartPie').style.visibility='hidden';
+	document.getElementById('selectFilterChartPie').style.visibility='hidden';
     } else {
+	console.log("listTest1 : "+listTest1.toString());
+	console.log("listTest2 : "+listTest2.toString());
 	updateChartLine(listTest1,listTest2);
 	updateChartPie(json, valueSelectFilterPie);
+	document.getElementById('myChartLine').style.visibility='visible';
+	document.getElementById('myChartPie').style.visibility='visible';
+	document.getElementById('selectFilterChartPie').style.visibility='visible';
     }   
 }
 
@@ -71,7 +75,8 @@ function createChartLine(label,data) {
 function updateChartLine(label,data){
     console.log("updating chart line ");
     console.log("label --> "+label.toString() +"\n" + "data -->" + data.toString());
-    removeData(chartLine);
+    removeData2(chartLine,label);
+    console.log("label --> "+label.toString() +"\n" + "data -->" + data.toString());
     addData(chartLine,label,data);
 }
 
@@ -119,9 +124,11 @@ function fillBodyTable(arrayWarning) {
 		var col0 = line.insertCell(0);
 		var col1 = line.insertCell(1);
 		var col2 = line.insertCell(2);
+		var col3 = line.insertCell(3);
 		col0.innerHTML += arrayWarning[i].id;
 		col1.innerHTML += arrayWarning[i].voucherType;
 		col2.innerHTML += arrayWarning[i].difference;
+		col3.innerHTML += arrayWarning[i].priority;
 	}
 }
 
@@ -131,9 +138,11 @@ function fillHeadTable() {
 	var col0 = line.insertCell(0);
 	var col1 = line.insertCell(1);
 	var col2 = line.insertCell(2);
+	var col3 = line.insertCell(3);
 	col0.innerHTML += "#";
-	col1.innerHTML += "Voucher Type"
-	col2.innerHTML += "Difference"
+	col1.innerHTML += "Voucher Type";
+	col2.innerHTML += "Difference";
+	col3.innerHTML += "Priority";
 }
 
 function removeHeadRow() {
@@ -228,9 +237,24 @@ function removeData(chart) {
 	}
 	chart.update();
 }
+function removeData2(chart,labelArray) {
+    console.log("removing my datas from my chart");
+    console.log("label before -> " + labelArray.toString());
+    
+	while(chart.data.labels.length != 0){
+		chart.data.labels.pop();
+		    console.log("label during  -> " + labelArray.toString());
+		chart.data.datasets.forEach((dataset) => {
+	        dataset.data.pop();
+	    });
+	}
+     chart.update();
+     console.log(" label after ---->"+labelArray.toString());
+}
 
 function addData(chart, label, data) {
     console.log("adding my datas from my chart");
+    console.log("label: "+ label.toString() + "   data:"+data.toString());	
 	for(var i=0;i<label.length;i++){
 		chart.data.labels.push(label[i]);
 		chart.data.datasets.forEach((dataset) => {

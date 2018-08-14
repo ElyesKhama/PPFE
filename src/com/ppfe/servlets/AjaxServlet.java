@@ -39,7 +39,7 @@ public class AjaxServlet extends HttpServlet {
 		// Initialization of writer
 		PrintWriter out = resp.getWriter();
 
-		// Recovery of parameter
+		// Recovery of parameters
 		String paramDate = req.getParameter("dateDay");
 
 		// Initalization nb of days
@@ -53,7 +53,6 @@ public class AjaxServlet extends HttpServlet {
 		System.out.println("json  :: \n" + json.toString());
 		out.print(json.toString());
 	}
-
 
 	public ArrayList<Warning> initializeWarnings(int nbDays) {
 		ArrayList<Warning> listWarnings = new ArrayList<Warning>();
@@ -116,13 +115,14 @@ public class AjaxServlet extends HttpServlet {
 
 		return jsonTable;
 	}
-	
+
 	public JsonObjectBuilder createJsonObjectWarning(Warning warning) {
 		JsonObjectBuilder builder = Json.createObjectBuilder();
 		builder.add("id", warning.getId());
 		builder.add("voucherType", warning.getPurchase().getVoucherType().getDescription());
 		builder.add("difference", warning.getCountDifference());
 		builder.add("priority", warning.getPriority());
+
 		return builder;
 	}
 
