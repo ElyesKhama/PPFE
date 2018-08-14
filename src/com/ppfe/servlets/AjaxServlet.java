@@ -45,13 +45,12 @@ public class AjaxServlet extends HttpServlet {
 		// Initalization nb of days
 		int nbDays = initializeNbDays(paramDate);
 
-
 		// Create JsonArrays for days and counts
 		JsonArray[] jsonTable = new JsonArray[3];
 		jsonTable = initializeJsonArrays(nbDays);
 
 		JsonObject json = createJson(jsonTable);
-		System.out.println("VERDIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIICT  :: \n" + json.toString());
+		System.out.println("json  :: \n" + json.toString());
 		out.print(json.toString());
 	}
 
@@ -123,6 +122,7 @@ public class AjaxServlet extends HttpServlet {
 		builder.add("id", warning.getId());
 		builder.add("voucherType", warning.getPurchase().getVoucherType().getDescription());
 		builder.add("difference", warning.getCountDifference());
+		builder.add("priority", warning.getPriority());
 		return builder;
 	}
 

@@ -1,40 +1,57 @@
 var chartLine = null;
 var chartPie = null;
+var nbMaxVoucher = 10;
 
 function testAjax() {
-	var valueSelected = document.getElementById("selectDate").value;
-
+	var valueSelectedDate = document.getElementById("selectDate").value;
+	var valueSelectFilterPie = document.getElementById("selectFilterChartPie").value;
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 
 			var json = JSON.parse(this.responseText);
 			updateTable(json.listWarnings);
-			if (valueSelected == "Today") {
-				if (chartLine != null) {
-					chartLine.destroy();
-					chartPie.destroy();
-				}
-			} else {
-				updateChartLine(json);
-				updateChartPie(json.listWarnings);
-			}
+			manageCharts(json, valueSelectedDate, valueSelectFilterPie);
 			document.getElementById("countWarningsDisplay").innerHTML = json.listWarnings.length;
 		}
 	};
-	xhttp.open("GET", "ajax?dateDay=" + valueSelected, true);
+	xhttp.open("GET", "ajax?dateDay=" + valueSelectedDate, true);
 	xhttp.send();
 }
 
-function updateChartLine(json) {
+function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
+    
+    var listTest1 = json.listDayWarnings.reverse();
+    var listTest2 = json.listCountWarnings.reverse();
+
+    
+    if( chartPie == null){
+	createChartLine(listTest1,listTest2);
+	var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
+	createChartPie(listPie[0],listPie[1]);
+    }
+
+    if (valueSelectedDate == "Today") {
+	if(chartLine != null && chartPie != null){
+            removeData(chartLine);
+            removeData(chartPie);
+	}
+    } else {
+	updateChartLine(listTest1,listTest2);
+	updateChartPie(json);
+    }   
+}
+
+function createChartLine(label,data) {
+    console.log("creating my chart line");
 	var ctx = document.getElementById("myChartLine").getContext('2d');
 	chartLine = new Chart(ctx, {
 		type : 'line',
 		data : {
-			labels : json.listDayWarnings.reverse(),
+			labels : label,
 			datasets : [ {
 				label : "Warnings",
-				data : json.listCountWarnings.reverse(),
+				data : data,
 				fill : false,
 				borderColor : 'rgba(0,0,255,1)'
 			} ]
@@ -50,6 +67,22 @@ function updateChartLine(json) {
 		}
 	});
 }
+
+function updateChartLine(label,data){
+    console.log("updating chart line ");
+    console.log("label --> "+label.toString() +"\n" + "data -->" + data.toString());
+    removeData(chartLine);
+    addData(chartLine,label,data);
+}
+
+function updateChartPie(json){
+    console.log("updating chart pie");
+	removeData(chartPie);
+	
+	var listPie = createListLabelsCounts(json.listWarnings);
+	addData(chartPie,listPie[0],listPie[1]);
+}
+
 
 function updateTable(arrayWarning) {
 	var nbTr = document.getElementsByTagName("tr").length;
@@ -108,35 +141,60 @@ function removeHeadRow() {
 	bodyHead.deleteRow(-1);
 }
 
-function updateChartPie(arrayWarning) {
-	var listVoucher = [];
-	var listCount = [];
-
-	// creation of the list of different vouchers
-	for (var i = 0; i < arrayWarning.length; i++) {
-		// TODO: see polyfill
-		if (!listVoucher.includes(arrayWarning[i].voucherType)) {
-			listVoucher.push(arrayWarning[i].voucherType);
-		}
+function createListLabelsCounts(arrayWarning, valueSelected) {
+	var listLabels = [];	// representing labels
+	var listCount = [];   // representing datas
+	if(valueSelected == "Amount"){
+        	// creation of the list of different vouchers
+        	for (var i = 0; i < arrayWarning.length; i++) {
+        		// TODO: see polyfill
+        		if (!listLabels.includes(arrayWarning[i].voucherType)) {
+        			listLabels.push(arrayWarning[i].voucherType);
+        		}
+        	}
 	}
-
+	else if(valueSelected == "Priority"){
+        	// creation of the list of different priorities
+        	for (var i = 0; i < arrayWarning.length; i++) {
+        		// TODO: see polyfill
+        		if (!listLabels.includes(arrayWarning[i].priority)) {
+        			listLabels.push(arrayWarning[i].priority);
+        		}
+        	}
+	}
 	// initialization of the count list to 0
-	for (var i = 0; i < listVoucher.length; i++) {
+	for (var i = 0; i < listLabels.length; i++) {
 		listCount[i] = 0;
 	}
-
-	// creation of the count list
-	for (var i = 0; i < arrayWarning.length; i++) {
-		for (var j = 0; j < listVoucher.length; j++) {
-			if (arrayWarning[i].voucherType == listVoucher[j]) {
-				listCount[j]++;
+	
+	if(valueSelected == "Amount"){
+		// creation of the count list
+		for (var i = 0; i < arrayWarning.length; i++) {
+			for (var j = 0; j < listLabels.length; j++) {
+				if (arrayWarning[i].voucherType == listLabels[j]) {
+					listCount[j]++;
+				}
 			}
 		}
 	}
-	createChartPie(listVoucher, listCount);
+	else if(valueSelected == "Priority"){
+		// creation of the count list
+		for (var i = 0; i < arrayWarning.length; i++) {
+			for (var j = 0; j < listLabels.length; j++) {
+				if (arrayWarning[i].priority == listLabels[j]) {
+					listCount[j]++;
+				}
+			}
+		}
+	}
+	
+	var listReturn = [listLabels, listCount];
+	
+	return listReturn;
 }
 
 function createChartPie(listVoucher, listCount) {
+    console.log("creating my chart pie");
 	var ctx = document.getElementById("myChartPie").getContext('2d');
 	chartPie = new Chart(ctx, {
 		type : 'pie',
@@ -145,7 +203,7 @@ function createChartPie(listVoucher, listCount) {
 			datasets : [ {
 				label : "Repartition of Warnings",
 				data : listCount,
-				backgroundColor : palette('tol', listCount.length).map(
+				backgroundColor : palette('tol', nbMaxVoucher).map(
 						function(hex) {
 							return '#' + hex;
 						})
@@ -158,4 +216,36 @@ function createChartPie(listVoucher, listCount) {
 			}
 		}
 	});
+}
+
+function removeData(chart) {
+    console.log("removing my datas from my chart");
+	while(chart.data.labels.length != 0){
+		chart.data.labels.pop();
+		chart.data.datasets.forEach((dataset) => {
+	        dataset.data.pop();
+	    });
+	}
+	chart.update();
+}
+
+function addData(chart, label, data) {
+    console.log("adding my datas from my chart");
+	for(var i=0;i<label.length;i++){
+		chart.data.labels.push(label[i]);
+		chart.data.datasets.forEach((dataset) => {
+		        dataset.data.push(data[i]);
+		    });
+	}
+	chart.update();
+}
+
+function testUpdate1(){
+    removeData(chartLine);
+    addData(chartLine,['aaa','bbb','ccc','ddd','eee'],[1,2,3,4,5]);   
+}
+
+function testUpdate2(){
+    removeData(chartLine);
+    addData(chartLine,['xxx','yyy','fff','bbb','nnn'],[5,4,3,2,1]);   
 }

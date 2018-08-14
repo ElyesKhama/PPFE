@@ -65,8 +65,18 @@
 				</div>
 			</div>
 			<div class="col">
-				<div class="container chart">
-					<canvas id="myChartPie"></canvas>
+				<div class="row">
+					<div class="container chart">
+						<canvas id="myChartPie"></canvas>
+					</div>
+				</div>
+				<div class="row">
+					<div class="container selectChart">
+						<select class="custom-select" id="selectFilterChartPie">
+							<option selected value="Amount" onclick="testAjax()">Amount</option>
+							<option value="Priority" onclick="testAjax()">Priority</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -75,17 +85,16 @@
 
 	<!-- -------------- JS SCRIPT ----------------- -->
 	<!-- 	colour palette generator (for charts) -->
-	<script src="https://codepen.io/anon/pen/aWapBE.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 	<script type="text/javascript">
-		var json = '${json}';
-	</script>
+	var json = '${json}';
+    </script>
+	<script src="https://codepen.io/anon/pen/aWapBE.js"></script>
+	<script type="text/javascript" src="inc/chartJs/Chart.min.js"></script>
 	<script type="text/javascript" src="inc/js/chart.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script type="text/javascript" src="inc/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="inc/jquery/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="inc/popper/popper.min.js"></script>
+
 	<!-- -------------- JS SCRIPT ----------------- -->
 
 	<!--TODO: [if lte IE 8]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
