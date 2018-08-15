@@ -86,7 +86,7 @@
 	<!-- -------------- JS SCRIPT ----------------- -->
 	<!-- 	colour palette generator (for charts) -->
 	<script type="text/javascript">
-	var json = '${json}';
+		var jsonTest = '${json}';
     </script>
 	<script src="https://codepen.io/anon/pen/aWapBE.js"></script>
 	<script type="text/javascript" src="inc/chartJs/Chart.min.js"></script>

@@ -18,17 +18,19 @@ import com.ppfe.servlets.IndexServlet;
 public class JobCreateWarning extends EJB3InvokerJob implements Job {
 	private static final Logger logger = LogManager.getLogger(JobCreateWarning.class);
 
+	//method called when the trigger is fired
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		logger.info("--- Job Execution (Quartz) ---");
 		ArrayList<Purchase> listPurchasesToday = new ArrayList<Purchase>();
 		ArrayList<Purchase> listPurchasesYesterday = new ArrayList<Purchase>();
 		ArrayList<Warning> listWarnings = new ArrayList<Warning>();
-
 		
 		try {
+			//purchaseDao.read("today")
 			executeMethod(arg0, "today", String.class, "read", "PurchaseDAO");
 			listPurchasesToday = (ArrayList<Purchase>) arg0.getResult();
+			//purchaseDao.read("yesterday")
 			executeMethod(arg0, "yesterday", String.class, "read", "PurchaseDAO");
 			listPurchasesYesterday = (ArrayList<Purchase>) arg0.getResult();
 
@@ -36,7 +38,6 @@ public class JobCreateWarning extends EJB3InvokerJob implements Job {
 			listWarnings = check.comparePurchases();
 
 			createWarnings(arg0,listWarnings);
-			
 			SendMail.send(listWarnings);
 			
 		} catch (JobExecutionException e) {
@@ -51,7 +52,7 @@ public class JobCreateWarning extends EJB3InvokerJob implements Job {
 		}
 	}
 
-	// TODO: ADD SOME GENERICITY;;;
+	// TODO: ADD SOME GENERICITY
 	public void executeMethod(JobExecutionContext context, Object arg, Class argClass, String nameMethod,
 			String nameEntityDAO) throws JobExecutionException {
 		Object[] args = initializationDataMapArgs(arg);

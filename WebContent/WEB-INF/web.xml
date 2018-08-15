@@ -17,6 +17,10 @@
 		<servlet-name>AjaxServlet</servlet-name>
 		<servlet-class>com.ppfe.servlets.AjaxServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>PurchaseServlet</servlet-name>
+		<servlet-class>com.ppfe.servlets.PurchaseServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Index</servlet-name>
 		<url-pattern>/index</url-pattern>
@@ -24,5 +28,9 @@
 	<servlet-mapping>
 		<servlet-name>AjaxServlet</servlet-name>
 		<url-pattern>/ajax</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>PurchaseServlet</servlet-name>
+		<url-pattern>/purchase</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -27,6 +27,21 @@
 	overflow-y: scroll;
 }
 
-.selectChart{
+.selectChart {
 	max-width: 200px;
+}
+
+.dayPurchase {
+	font-size: 50px;
+	text-align: center;
+}
+
+.dayPurchaseCount {
+	font-size: 80px;
+	text-align: center;
+	color: red;
+}
+
+.tablePurchase {
+	margin-top: 100px;
 }

@@ -45,7 +45,7 @@ public class IndexServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		logger.info("--- Servlet Rreached ---");
+		logger.info("--- Index Servlet Rreached ---");
 
 		ArrayList<Purchase> listPurchases = new ArrayList<Purchase>();
 		listPurchases = purchaseDao.read("all");

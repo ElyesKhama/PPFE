@@ -29,7 +29,7 @@ function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
 	createChartLine(listTest1,listTest2);
 	var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
 	createChartPie(listPie[0],listPie[1]);
-    }
+    }	
 
     if (valueSelectedDate == "Today") {
 	document.getElementById('myChartLine').style.visibility='hidden';
@@ -125,7 +125,8 @@ function fillBodyTable(arrayWarning) {
 		var col1 = line.insertCell(1);
 		var col2 = line.insertCell(2);
 		var col3 = line.insertCell(3);
-		col0.innerHTML += arrayWarning[i].id;
+		//col0.innerHTML += arrayWarning[i].id;
+		col0.innerHTML += "<a href=\"/PPFE/purchase?id="+arrayWarning[i].id+"\">"+arrayWarning[i].id+"</a>";
 		col1.innerHTML += arrayWarning[i].voucherType;
 		col2.innerHTML += arrayWarning[i].difference;
 		col3.innerHTML += arrayWarning[i].priority;

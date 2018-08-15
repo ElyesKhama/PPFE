@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import com.ppfe.entities.Purchase;
 import com.ppfe.entities.Warning;
 
 @Stateless
@@ -22,6 +23,7 @@ public class WarningDAO {
 	private static final String QUERY_READ_DAY_WARNING = "SELECT w FROM Warning w WHERE w.dateDay >= :dateDay";
 	private static final String QUERY_COUNT_WARNING = "SELECT COUNT(w) FROM Warning w WHERE w.dateDay = :dateDay";
 	private static final String QUERY_COUNT_WARNING_NB_DAYS = "SELECT COUNT(w) FROM Warning w WHERE w.dateDay >= :dateDay";
+	private static final String QUERY_READ_WARNING_ID = "SELECT w FROM Warning w WHERE w.id = :id";
 
 	// Injection of manager who makes the connection with the database
 	@PersistenceContext(unitName = "db_ppfe_pu_warning")
@@ -34,6 +36,20 @@ public class WarningDAO {
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
+	}
+	
+	public Warning read(Long id) throws DAOException {
+		Warning warning = null;
+		Query query = null;
+		try {
+			query = em.createQuery(QUERY_READ_WARNING_ID);
+			query.setParameter("id", id);
+
+			warning = (Warning) query.getSingleResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return warning;
 	}
 
 	public ArrayList<Warning> read() throws DAOException {

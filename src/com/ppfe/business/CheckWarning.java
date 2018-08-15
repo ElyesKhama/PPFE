@@ -29,6 +29,7 @@ public class CheckWarning {
 	private static final String PRIORITY_MEDIUM = "medium";
 	private static final String PRIORITY_HIGH = "high";
 
+	//injection of the EJB to have access to method interacting with DB
 	@EJB
 	private WarningDAO warningDao;
 
@@ -38,6 +39,7 @@ public class CheckWarning {
 		this.context = context;
 	}
 
+	//method which compare today's and yesterday's purchases
 	public ArrayList<Warning> comparePurchases() {
 		int i;
 		for (i = 0; i < listPurchasesToday.size(); i++) {
@@ -46,6 +48,7 @@ public class CheckWarning {
 		return listWarnings;
 	}
 
+	//method which calculate the difference between the count's purchases
 	public void calculateDifference(Purchase pToday, Purchase pYesterday) {
 		int difference;
 		String priority = null;
@@ -67,13 +70,14 @@ public class CheckWarning {
 		}
 	}
 
+	//method which add warnings to the list
 	public void addWarning(String priority, int countDifference, Purchase purchase) {
 		Warning warning = new Warning();
 		warning.setPriority(priority);
 		warning.setCountDifference(countDifference);
 		purchase.setId(purchase.getId());
 		warning.setPurchase(purchase);
-		warning.setDateDay(new Date(System.currentTimeMillis()));
+		warning.setDateDay(new Date(System.currentTimeMillis()));	//today's date
 		listWarnings.add(warning);
 	}
 }

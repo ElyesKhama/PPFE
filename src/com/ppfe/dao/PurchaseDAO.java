@@ -23,6 +23,9 @@ public class PurchaseDAO {
 	private EntityManager em;
 	private static final String QUERY_READ_ALL_PURCHASES = "SELECT u FROM Purchase u";
 	private static final String QUERY_READ_DAY_PURCHASES = "SELECT u FROM Purchase u WHERE u.dateDay = :dateDay";
+	private static final String QUERY_READ_ID_PURCHASE = "SELECT u FROM Purchase u WHERE u.id = :id";
+	private static final String QUERY_READ_DATE_VOUCHER_PURCHASE = "SELECT u FROM Purchase u WHERE u.dateDay = :dateDay and voucherType.id = :id";
+
 
 	private static final Logger logger = LogManager.getLogger(PurchaseDAO.class);
 
@@ -35,20 +38,51 @@ public class PurchaseDAO {
 		}
 	}
 
+	//TODO: DELETE 
+	public Purchase read(Long id) throws DAOException {
+		Purchase purchase = null;
+
+		Query query = null;
+		try {
+			query = em.createQuery(QUERY_READ_ID_PURCHASE);
+			query.setParameter("id", id);
+
+			purchase = (Purchase) query.getSingleResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return purchase;
+	}
+
+	public Purchase read(Date dateDay, Long idVoucher) {
+		Purchase purchase = null;
+		Query query = null;
+		try {
+			query = em.createQuery(QUERY_READ_DATE_VOUCHER_PURCHASE);
+			query.setParameter("dateDay", dateDay);
+			query.setParameter("id", idVoucher);
+			purchase = (Purchase) query.getSingleResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return purchase;
+	}
+	// TODO: Modify : add genericity
 	public ArrayList<Purchase> read(String choice) throws DAOException {
 		logger.info("--- Read Purchases from Database ---");
-		
+
 		ArrayList<Purchase> listPurchases = new ArrayList<Purchase>();
 		Query query = null;
-		
-		//initialization of Calendar 
+
+		// initialization of Calendar
 		Calendar calendar = Calendar.getInstance();
-		//Instantiation with date of Today
+		// Instantiation with date of Today
+		//TODO: getTimeMillis
 		java.util.Date dateUtil = calendar.getTime();
-		//Conversion into java.sql.Date instead of java.util.Date (needed for query)
+		// Conversion into java.sql.Date instead of java.util.Date (needed for query)
 		Date dateSql = new Date(dateUtil.getTime());
 
-		//TODO: GetTimeInMillis ??
+		// TODO: GetTimeInMillis ??
 		try {
 			switch (choice) {
 			case "all":
@@ -62,7 +96,7 @@ public class PurchaseDAO {
 				// Substraction of 1 Day to obtain the Date of yesterday
 				calendar.add(Calendar.DAY_OF_MONTH, -1);
 				dateUtil = calendar.getTime();
-				//Conversion into java.sql.Date instead of java.util.Date (needed for query)
+				// Conversion into java.sql.Date instead of java.util.Date (needed for query)
 				dateSql = new Date(dateUtil.getTime());
 				query = em.createQuery(QUERY_READ_DAY_PURCHASES);
 				query.setParameter("dateDay", dateSql);
