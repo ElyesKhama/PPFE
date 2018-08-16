@@ -5,12 +5,14 @@ var chartPie = null;
 var nbMaxVoucher = 10;
 
 function testAjax() {
+    
 	var valueSelectedDate = document.getElementById("selectDate").value;
 	var valueSelectFilterPie = document.getElementById("selectFilterChartPie").value;
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var json = JSON.parse(this.responseText);
+			sessionStorage.setItem("json",JSON.stringify(json));
 			updateTable(json.listWarnings);
 			manageCharts(json, valueSelectedDate, valueSelectFilterPie);
 			document.getElementById("countWarningsDisplay").innerHTML = json.listWarnings.length;
@@ -25,8 +27,7 @@ function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
     var listTest1 = json.listDayWarnings.reverse();
     var listTest2 = json.listCountWarnings.reverse();
 
-    if( chartLine == null){
-	createChartLine(listTest1,listTest2);
+    if( chartPie == null){
 	var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
 	createChartPie(listPie[0],listPie[1]);
     }	
@@ -36,10 +37,11 @@ function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
 	document.getElementById('myChartPie').style.visibility='hidden';
 	document.getElementById('selectFilterChartPie').style.visibility='hidden';
     } else {
-	console.log("listTest1 : "+listTest1.toString());
-	console.log("listTest2 : "+listTest2.toString());
-	updateChartLine(listTest1,listTest2);
+	//updateChartLine(listTest1,listTest2,json);
+	createChartLine(listTest1,listTest2);
+
 	updateChartPie(json, valueSelectFilterPie);
+	
 	document.getElementById('myChartLine').style.visibility='visible';
 	document.getElementById('myChartPie').style.visibility='visible';
 	document.getElementById('selectFilterChartPie').style.visibility='visible';
@@ -72,22 +74,26 @@ function createChartLine(label,data) {
 	});
 }
 
-function updateChartLine(label,data){
+function updateChartLine(label,data,json){
     console.log("updating chart line ");
     console.log("label --> "+label.toString() +"\n" + "data -->" + data.toString());
     removeData2(chartLine,label);
     console.log("label --> "+label.toString() +"\n" + "data -->" + data.toString());
-    addData(chartLine,label,data);
+    addData(chartLine,json.listWarnings,json.listCountWarnings);
 }
 
 function updateChartPie(json, valueSelectFilterPie){
     console.log("updating chart pie");
-	removeData(chartPie);
-	
-	var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
-	addData(chartPie,listPie[0],listPie[1]);
+    removeData(chartPie);
+    console.log("json list warnings ::: " + json.listWarnings);
+    var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
+    addData(chartPie,listPie[0],listPie[1]);
 }
 
+function changeChartPie(){
+    var valueSelectFilterPie = document.getElementById("selectFilterChartPie").value;
+    updateChartPie(JSON.parse(sessionStorage.getItem("json")),valueSelectFilterPie);
+}
 
 function updateTable(arrayWarning) {
 	var nbTr = document.getElementsByTagName("tr").length;
@@ -152,6 +158,7 @@ function removeHeadRow() {
 }
 
 function createListLabelsCounts(arrayWarning, valueSelected) {
+    console.log("arraywarning 164 :::" + arrayWarning);
 	var listLabels = [];	// representing labels
 	var listCount = [];   // representing datas
 	if(valueSelected == "Amount"){
@@ -244,11 +251,12 @@ function removeData2(chart,labelArray) {
     
 	while(chart.data.labels.length != 0){
 		chart.data.labels.pop();
-		    console.log("label during  -> " + labelArray.toString());
+		console.log("label during  -> " + labelArray.toString());
 		chart.data.datasets.forEach((dataset) => {
 	        dataset.data.pop();
 	    });
 	}
+	
      chart.update();
      console.log(" label after ---->"+labelArray.toString());
 }

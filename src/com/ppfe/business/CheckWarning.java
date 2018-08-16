@@ -61,7 +61,7 @@ public class CheckWarning {
 		} else if (difference <= DIFF_MEDIUM) {
 			priority = PRIORITY_MEDIUM;
 			war = true;
-		} else if (difference <= DIFF_LOW) {
+		} else if (difference < DIFF_LOW) {
 			priority = PRIORITY_LOW;
 			war = true;
 		}

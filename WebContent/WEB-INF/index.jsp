@@ -73,8 +73,8 @@
 				<div class="row">
 					<div class="container selectChart">
 						<select class="custom-select" id="selectFilterChartPie">
-							<option selected value="Amount" onclick="testAjax()">Amount</option>
-							<option value="Priority" onclick="testAjax()">Priority</option>	
+							<option selected value="Amount" onclick="changeChartPie()">Amount</option>
+							<option value="Priority" onclick="changeChartPie()">Priority</option>	
 						</select>
 					</div>
 				</div>
