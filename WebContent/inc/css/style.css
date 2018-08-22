@@ -1,8 +1,41 @@
 @charset "UTF-8";
 
-.warningContainer {
+body {
+	background-color: #eeefff;
+}
+
+.title {
+	font-weight: bold;
+}
+
+.containerElem {
+	background-color: white;
+}
+
+#warningContainer {
 	background-color: red;
-	max-width: 100px;
+	/* 	max-width: 100px; */
+	height: 200px;
+	width: 200px;
+}
+
+#countWarningsDisplay {
+	font-weight: bold;
+	font-size: 70px;
+	color: white;
+	text-align: center;
+}
+
+#selectDate {
+	width: 200px;
+	height: 35px;
+}
+
+.containerFlex {
+	margin-top: 30px;
+	display: flex;
+	justify-content: space-around;
+	display: flex;
 }
 
 .numberWarning {
@@ -16,15 +49,27 @@
 	width: 40vw;
 }
 
-#countWarningsDisplay {
-	text-align: center;
-	font-size: 40px;
-	color: white;
+#tableWarn {
+	padding-right: 25px;
+	padding-left: 25px;
+	margin-bottom: 25px;
+	width: 1250px;
+	height: 250px;
+	overflow-y: scroll;
+	max-height: 235px;
 }
 
-.tableWarn {
-	max-height: 300px;
-	overflow-y: scroll;
+#tableWarnings {
+	margin-bottom: 0;
+	background-color: #eeefff;
+}
+
+.rowTable {
+	cursor: pointer;
+}
+
+.rowTable:hover {
+	background-color: #AADCDC;
 }
 
 .selectChart {
@@ -42,6 +87,22 @@
 	color: red;
 }
 
-.tablePurchase {
-	margin-top: 100px;
+.containerUniqueChart {
+	border-style: solid;
+	border-color: #C39898;
+	height: 40vh;
+	width: 40vw;
+}
+
+.containerFlexSimple {
+	display: flex;
+}
+
+#iconExclamation {
+	width: 50px;
+	height: 50px;
+}
+
+#containerChart {
+	padding-top: 15 px;
 }

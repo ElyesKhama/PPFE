@@ -33,22 +33,23 @@ function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
     }	
 
     if (valueSelectedDate == "Today") {
-	document.getElementById('myChartLine').style.visibility='hidden';
-	document.getElementById('myChartPie').style.visibility='hidden';
-	document.getElementById('selectFilterChartPie').style.visibility='hidden';
+	document.getElementById('containerFlexCharts').style.visibility='hidden';
     } else {
-	//updateChartLine(listTest1,listTest2,json);
+	// updateChartLine(listTest1,listTest2,json);
 	createChartLine(listTest1,listTest2);
 
 	updateChartPie(json, valueSelectFilterPie);
 	
-	document.getElementById('myChartLine').style.visibility='visible';
-	document.getElementById('myChartPie').style.visibility='visible';
-	document.getElementById('selectFilterChartPie').style.visibility='visible';
+	document.getElementById('containerFlexCharts').style.visibility='visible';
     }   
 }
 
 function createChartLine(label,data) {
+    if(chartLine != null){
+	chartLine.destroy();
+	console.log("destroying chart line");
+    }
+    
     console.log("creating my chart line");
 	var ctx = document.getElementById("myChartLine").getContext('2d');
 	chartLine = new Chart(ctx, {
@@ -69,6 +70,10 @@ function createChartLine(label,data) {
 						stepSize : 1
 					}
 				} ]
+			},
+			title : {
+				display : false,
+				text : 'Evolution of Warnings'
 			}
 		}
 	});
@@ -76,16 +81,13 @@ function createChartLine(label,data) {
 
 function updateChartLine(label,data,json){
     console.log("updating chart line ");
-    console.log("label --> "+label.toString() +"\n" + "data -->" + data.toString());
     removeData2(chartLine,label);
-    console.log("label --> "+label.toString() +"\n" + "data -->" + data.toString());
     addData(chartLine,json.listWarnings,json.listCountWarnings);
 }
 
 function updateChartPie(json, valueSelectFilterPie){
     console.log("updating chart pie");
     removeData(chartPie);
-    console.log("json list warnings ::: " + json.listWarnings);
     var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
     addData(chartPie,listPie[0],listPie[1]);
 }
@@ -131,11 +133,15 @@ function fillBodyTable(arrayWarning) {
 		var col1 = line.insertCell(1);
 		var col2 = line.insertCell(2);
 		var col3 = line.insertCell(3);
-		//col0.innerHTML += arrayWarning[i].id;
-		col0.innerHTML += "<a href=\"/PPFE/purchase?id="+arrayWarning[i].id+"\">"+arrayWarning[i].id+"</a>";
+		// col0.innerHTML += arrayWarning[i].id;
+		col0.innerHTML += arrayWarning[i].id;
 		col1.innerHTML += arrayWarning[i].voucherType;
 		col2.innerHTML += arrayWarning[i].difference;
 		col3.innerHTML += arrayWarning[i].priority;
+		var link = "\'purchase?id="+arrayWarning[i].id+"\'";
+		var windowLocation = "window.location ="+link;
+		line.setAttribute("onclick",windowLocation);
+		line.classList.add("rowTable",".table-hover");
 	}
 }
 
@@ -150,6 +156,11 @@ function fillHeadTable() {
 	col1.innerHTML += "Voucher Type";
 	col2.innerHTML += "Difference";
 	col3.innerHTML += "Priority";
+	line.style.backgroundColor = "#907873";
+	col0.style.fontWeight = "bold";
+	col1.style.fontWeight = "bold";
+	col2.style.fontWeight = "bold";
+	col3.style.fontWeight = "bold";
 }
 
 function removeHeadRow() {
@@ -158,7 +169,6 @@ function removeHeadRow() {
 }
 
 function createListLabelsCounts(arrayWarning, valueSelected) {
-    console.log("arraywarning 164 :::" + arrayWarning);
 	var listLabels = [];	// representing labels
 	var listCount = [];   // representing datas
 	if(valueSelected == "Amount"){
@@ -211,6 +221,8 @@ function createListLabelsCounts(arrayWarning, valueSelected) {
 }
 
 function createChartPie(listVoucher, listCount) {
+    
+    
     console.log("creating my chart pie");
 	var ctx = document.getElementById("myChartPie").getContext('2d');
 	chartPie = new Chart(ctx, {
@@ -220,15 +232,15 @@ function createChartPie(listVoucher, listCount) {
 			datasets : [ {
 				label : "Repartition of Warnings",
 				data : listCount,
-				backgroundColor : palette('tol', nbMaxVoucher).map(
-						function(hex) {
-							return '#' + hex;
-						})
+    				backgroundColor : palette('tol', nbMaxVoucher).map(
+    						function(hex) {
+    							return '#' + hex;
+    						})
 			} ],
 		},
 		options : {
 			title : {
-				display : true,
+				display : false,
 				text : 'Repartition of Warnings'
 			}
 		}
@@ -246,24 +258,19 @@ function removeData(chart) {
 	chart.update();
 }
 function removeData2(chart,labelArray) {
-    console.log("removing my datas from my chart");
-    console.log("label before -> " + labelArray.toString());
-    
+    console.log("removing my datas from my chart");    
 	while(chart.data.labels.length != 0){
 		chart.data.labels.pop();
-		console.log("label during  -> " + labelArray.toString());
 		chart.data.datasets.forEach((dataset) => {
 	        dataset.data.pop();
 	    });
 	}
 	
      chart.update();
-     console.log(" label after ---->"+labelArray.toString());
 }
 
 function addData(chart, label, data) {
     console.log("adding my datas from my chart");
-    console.log("label: "+ label.toString() + "   data:"+data.toString());	
 	for(var i=0;i<label.length;i++){
 		chart.data.labels.push(label[i]);
 		chart.data.datasets.forEach((dataset) => {
