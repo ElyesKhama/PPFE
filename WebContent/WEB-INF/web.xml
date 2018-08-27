@@ -21,6 +21,10 @@
 		<servlet-name>PurchaseServlet</servlet-name>
 		<servlet-class>com.ppfe.servlets.PurchaseServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.ppfe.servlets.LoginFormServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Index</servlet-name>
 		<url-pattern>/index</url-pattern>
@@ -32,5 +36,9 @@
 		<servlet-mapping>
 		<servlet-name>PurchaseServlet</servlet-name>
 		<url-pattern>/purchase</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
 </web-app>

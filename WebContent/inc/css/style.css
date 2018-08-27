@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-	background-color: #eeefff;
+	background-color: #EFEFEF;
 }
 
 .title {
@@ -31,11 +31,23 @@ body {
 	height: 35px;
 }
 
+#elemTable {
+	width: 1250px;
+}
+
 .containerFlex {
 	margin-top: 30px;
 	display: flex;
 	justify-content: space-around;
-	display: flex;
+}
+
+#detailsWarning {
+	font-weight: bold;
+	font-size: 40px;
+}
+
+.warningRecap{
+	font-size: 25px;
 }
 
 .numberWarning {
@@ -53,15 +65,15 @@ body {
 	padding-right: 25px;
 	padding-left: 25px;
 	margin-bottom: 25px;
-	width: 1250px;
+	width: auto;
 	height: 250px;
+	max-height: 250px;
 	overflow-y: scroll;
-	max-height: 235px;
 }
 
 #tableWarnings {
 	margin-bottom: 0;
-	background-color: #eeefff;
+	background-color: #EFEFEF;
 }
 
 .rowTable {
@@ -79,6 +91,15 @@ body {
 .dayPurchase {
 	font-size: 50px;
 	text-align: center;
+}
+
+.dayPurchaseLabel{
+	font-size: 30px;
+	text-align: center;
+}
+
+.borderTable{
+	border-style: solid;
 }
 
 .dayPurchaseCount {
@@ -105,4 +126,8 @@ body {
 
 #containerChart {
 	padding-top: 15 px;
+}
+
+.tablePurchase {
+	margin-top: 200px;
 }

@@ -23,31 +23,26 @@
 	<nav class="navbar navbar-dark bg-dark">
 		<a class="navbar-brand" href="/PPFE/index"><img
 			src="inc/images/Logo.png" height="30" width="110"></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
 	</nav>
 	<!-- -------------- NAVBAR ----------------- -->
 
+	<p id="detailsWarning">
+		Details : Warning n°
+		<c:out value="${warning.id}"></c:out>
+	</p>
+
 	<!-- -------------- WARNING'S RECAP ----------------- -->
-	<div class="container">
+	<div class="container containerElem">
 		<div class="row">
-			<div class="col">
-				Warning n°
-				<c:out value="${warning.id}"></c:out>
-			</div>
-			<div class="col">
+			<div class="col warningRecap">
 				Priority :
 				<c:out value="${warning.priority}"></c:out>
 			</div>
-			<div class="col">
+			<div class="col warningRecap">
 				Voucher :
 				<c:out value="${warning.purchase.voucherType.description}"></c:out>
 			</div>
-			<div class="col">
+			<div class="col warningRecap">
 				Date :
 				<c:out value="${warning.dateDay}"></c:out>
 			</div>
@@ -56,17 +51,23 @@
 	<!-- -------------- WARNING'S RECAP ----------------- -->
 
 	<!-- -------------- PURCHASE DAY AND PREVIOUS DAYS RECAP ----------------- -->
-	<div class="container tablePurchase">
+	<div class="container tablePurchase containerElem">
 		<div class="row">
-			<div class="col dayPurchase">
+			<div class="col">
+				<span class="dayPurchaseLabel">Date</span>
+			</div>
+			<div class="col dayPurchase borderTable">
 				<c:out value="${previousPurchase.dateDay}"></c:out>
 			</div>
-			<div class="col dayPurchase">
+			<div class="col dayPurchase borderTable">
 				<c:out value="${warning.dateDay}"></c:out>
 			</div>
 			<div class="col"></div>
 		</div>
 		<div class="row">
+			<div class="col">
+				<span class="dayPurchaseLabel">Count</span>
+			</div>
 			<div class="col dayPurchaseCount">
 				<c:out value="${previousPurchase.countTotal}"></c:out>
 			</div>

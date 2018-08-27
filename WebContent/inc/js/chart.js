@@ -174,7 +174,7 @@ function createListLabelsCounts(arrayWarning, valueSelected) {
 	if(valueSelected == "Amount"){
         	// creation of the list of different vouchers
         	for (var i = 0; i < arrayWarning.length; i++) {
-        		// TODO: see polyfill
+        		// TODO: see polyfill https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes#Polyfill
         		if (!listLabels.includes(arrayWarning[i].voucherType)) {
         			listLabels.push(arrayWarning[i].voucherType);
         		}
@@ -278,14 +278,4 @@ function addData(chart, label, data) {
 		    });
 	}
 	chart.update();
-}
-
-function testUpdate1(){
-    removeData(chartLine);
-    addData(chartLine,['aaa','bbb','ccc','ddd','eee'],[1,2,3,4,5]);   
-}
-
-function testUpdate2(){
-    removeData(chartLine);
-    addData(chartLine,['xxx','yyy','fff','bbb','nnn'],[5,4,3,2,1]);   
 }

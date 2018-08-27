@@ -12,9 +12,7 @@
 	href="inc/bootstrap/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="inc/css/style.css" />
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-	crossorigin="anonymous">
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
 <!-- -------------- CSS SHEETS ----------------- -->
 
@@ -24,15 +22,37 @@
 	<nav class="navbar navbar-dark bg-dark">
 		<a class="navbar-brand" href="#"><img src="inc/images/Logo.png"
 			height="30" width="110"></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-	</nav>
-	<!-- -------------- NAVBAR ----------------- -->
+		<c:choose>
+			<c:when test="${empty sessionScope.user}">
+				<div class="btn-group">
+					<button type="button" class="btn btn-secondary dropdown-toggle"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Login</button>
+					<div class="dropdown-menu dropdown-menu-right" id="myDropdown">
+						<form method="post" action="/PPFE/login">
+							<div class="form-group">
+								<label for="exampleInputEmail1">Username</label> <input
+									type="text" class="form-control" id="inputUsername"
+									name="inputUsername" placeholder="Enter email" required>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Password</label> <input
+									type="password" class="form-control" id="inputPassword"
+									name="inputPassword" placeholder="Password" required>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+					<c:out value="${sessionScope.user.username}"></c:out>
+			</c:otherwise>
+		</c:choose>
 
+	</nav>
+
+	<!-- -------------- NAVBAR ----------------- -->
 
 	<div class="containerFlex">
 		<div id="elemCountWarning">
@@ -54,7 +74,7 @@
 			</div>
 			<!-- -------------- SELECT DATE ----------------- -->
 		</div>
-		<div class="containerElem">
+		<div class="containerElem" id="elemTable">
 			<p class="title">List</p>
 			<!-- -------------- TABLE ----------------- -->
 			<div id="tableWarn">
@@ -94,6 +114,9 @@
 	<!-- -------------- CHARTS ----------------- -->
 
 	<!-- -------------- JS SCRIPT ----------------- -->
+	<script type="text/javascript" src="inc/jquery/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="inc/popper/popper.min.js"></script>
+
 	<!-- 	colour palette generator (for charts) -->
 	<script type="text/javascript">
 	var jsonTest = '${json}';
@@ -102,15 +125,8 @@
 	<script type="text/javascript" src="inc/chartJs/Chart.min.js"></script>
 	<script type="text/javascript" src="inc/js/chart.js"></script>
 	<script type="text/javascript" src="inc/bootstrap/bootstrap.min.js"></script>
-	<script type="text/javascript" src="inc/jquery/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="inc/popper/popper.min.js"></script>
-	<script type="text/javascript">
-	jQuery(document).ready(function($) {
-	    $(".headTable").click(function() {
-		window.location = $(this).data('url');
-	    });
-	});
-    </script>
+
+
 	<!-- -------------- JS SCRIPT ----------------- -->
 
 	<!--TODO: [if lte IE 8]><script type="text/javascript" src="excanvas.js"></script><![endif]-->

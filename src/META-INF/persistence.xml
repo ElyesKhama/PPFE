@@ -26,4 +26,11 @@
 		<properties>
 		</properties>
 	</persistence-unit>
+	<persistence-unit name="db_ppfe_pu_user"
+		transaction-type="JTA">
+		<jta-data-source>java:/MySqlDS</jta-data-source>
+		<class>com.ppfe.entities.User</class>
+		<properties>
+		</properties>
+	</persistence-unit>
 </persistence>

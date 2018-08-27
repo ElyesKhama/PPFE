@@ -1,6 +1,7 @@
 package com.ppfe.servlets;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.Date;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import com.google.common.hash.Hashing;
 import com.ppfe.dao.PurchaseDAO;
 import com.ppfe.dao.WarningDAO;
 import com.ppfe.entities.Purchase;
@@ -85,6 +87,13 @@ public class IndexServlet extends HttpServlet {
 		req.setAttribute(ATTRIBUTE_LIST_PURCHASES, listPurchases);
 		req.setAttribute(ATTRIBUTE_LIST_WARNINGS, listWarnings);
 		
+		
+		String originalString = "admin";
+		
+		String sha256hex = Hashing.sha256()
+				  .hashString(originalString, StandardCharsets.UTF_8)
+				  .toString();
+				
 		this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
 	}
 

@@ -52,6 +52,7 @@ public class AjaxServlet extends HttpServlet {
 		JsonObject json = createJson(jsonTable);
 		System.out.println("json  :: \n" + json.toString());
 		out.print(json.toString());
+		
 	}
 
 	public ArrayList<Warning> initializeWarnings(int nbDays) {
