@@ -33,6 +33,7 @@ body {
 
 #elemTable {
 	width: 1250px;
+	height: 100%;
 }
 
 .containerFlex {
@@ -66,7 +67,6 @@ body {
 	padding-left: 25px;
 	margin-bottom: 25px;
 	width: auto;
-	height: 250px;
 	max-height: 250px;
 	overflow-y: scroll;
 }
@@ -129,5 +129,5 @@ body {
 }
 
 .tablePurchase {
-	margin-top: 200px;
+	margin-top: 20	0px;
 }
