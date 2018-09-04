@@ -23,8 +23,6 @@ public class Purchase {
 	private Date dateDay;
 	@Column(name = "count_total")
 	private int countTotal;
-/*	@Column(name = "id_voucher")
-	private Long idVoucher;*/
 	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
 	@JoinColumn(name = "id_voucher")
 	private VoucherType voucherType;
@@ -53,14 +51,6 @@ public class Purchase {
 	public void setCountTotal(int countTotal) {
 		this.countTotal = countTotal;
 	}
-
-/*	public Long getIdVoucher() {
-		return idVoucher;
-	}
-
-	public void setIdVoucher(Long idVoucher) {
-		this.idVoucher = idVoucher;
-	}*/
 
 	public String toString() {
 		return "Voici le purchase avec l'ID : " + this.id.toString();

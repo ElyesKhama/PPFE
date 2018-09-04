@@ -22,6 +22,8 @@
 	<nav class="navbar navbar-dark bg-dark">
 		<a class="navbar-brand" href="#"><img src="inc/images/Logo.png"
 			height="30" width="110"></a>
+		<div class="collapse navbar-collapse"></div>
+
 		<c:choose>
 			<c:when test="${empty sessionScope.user}">
 				<div class="btn-group">
@@ -29,31 +31,30 @@
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Login</button>
 					<div class="dropdown-menu dropdown-menu-right" id="myDropdown">
-						<form method="post" action="/PPFE/login">
-							<div class="form-group">
-								<label for="exampleInputEmail1">Username</label> <input
-									type="text" class="form-control" id="inputUsername"
-									name="inputUsername" placeholder="Enter email" required>
-							</div>
-							<div class="form-group">
-								<label for="exampleInputPassword1">Password</label> <input
-									type="password" class="form-control" id="inputPassword"
-									name="inputPassword" placeholder="Password" required>
-							</div>
-							<button type="submit" class="btn btn-primary">Submit</button>
-						</form>
+						<a href="<c:url value = "/login"/>">LOG IN</a>
 					</div>
 				</div>
 			</c:when>
 			<c:otherwise>
-					<c:out value="${sessionScope.user.username}"></c:out>
+				<div class="btn-group">
+					<button type="button" class="btn btn-secondary dropdown-toggle"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="far fa-user"></i>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right" id="myDropdown">
+						<p>
+							Connected as : <br>
+							<c:out value="${sessionScope.user.username }"></c:out>
+							<br> <a href="<c:url value = "/logout"/>">LOG OUT</a>
+
+						</p>
+					</div>
+				</div>
 			</c:otherwise>
 		</c:choose>
-
 	</nav>
 
 	<!-- -------------- NAVBAR ----------------- -->
-
 	<div class="containerFlex">
 		<div id="elemCountWarning">
 			<!-- -------------- NUMBER OF WARNINGS ----------------- -->
@@ -116,6 +117,14 @@
 	<!-- -------------- JS SCRIPT ----------------- -->
 	<script type="text/javascript" src="inc/jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="inc/popper/popper.min.js"></script>
+
+	<script>
+	$(function() {
+	    $('#myDropdown').click(function(e) {
+		e.stopPropagation();
+	    })
+	});
+    </script>
 
 	<!-- 	colour palette generator (for charts) -->
 	<script type="text/javascript">

@@ -86,14 +86,7 @@ public class IndexServlet extends HttpServlet {
 		req.setAttribute(ATTRIBUTE_JSON, jsonObject);
 		req.setAttribute(ATTRIBUTE_LIST_PURCHASES, listPurchases);
 		req.setAttribute(ATTRIBUTE_LIST_WARNINGS, listWarnings);
-		
-		
-		String originalString = "admin";
-		
-		String sha256hex = Hashing.sha256()
-				  .hashString(originalString, StandardCharsets.UTF_8)
-				  .toString();
-				
+
 		this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
 	}
 

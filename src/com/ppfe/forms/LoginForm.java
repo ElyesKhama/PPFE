@@ -30,8 +30,11 @@ public class LoginForm {
 	public User loginUser(HttpServletRequest req, UserDAO userDao) {
 		User user = null;
 
+		//recover parameters sent in the form
 		String username = req.getParameter(INPUT_USERNAME);
 		String password = req.getParameter(INPUT_PASSWORD);
+		
+		//method to hash the password
 		String passwordHash = null;
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -42,14 +45,15 @@ public class LoginForm {
 			e.printStackTrace();
 		}
 		
+		//try to read the user in the DB
 		user = userDao.read(username);
 
 		if (user != null) {
+			//found a user, : compare password
 			if (passwordHash.equalsIgnoreCase(user.getPassword())) {
-				success = true;
+				success = true;	//connection ok
 			}
 		}
-
 		return user;
 	}
 

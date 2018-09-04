@@ -52,7 +52,7 @@ public class AjaxServlet extends HttpServlet {
 		JsonObject json = createJson(jsonTable);
 		System.out.println("json  :: \n" + json.toString());
 		out.print(json.toString());
-		
+
 	}
 
 	public ArrayList<Warning> initializeWarnings(int nbDays) {
@@ -123,7 +123,6 @@ public class AjaxServlet extends HttpServlet {
 		builder.add("voucherType", warning.getPurchase().getVoucherType().getDescription());
 		builder.add("difference", warning.getCountDifference());
 		builder.add("priority", warning.getPriority());
-
 		return builder;
 	}
 
