@@ -21,6 +21,7 @@ public class PurchaseDAO {
 
 	@PersistenceContext(unitName = "db_ppfe_pu_purchase")
 	private EntityManager em;
+	
 	private static final String QUERY_READ_ALL_PURCHASES = "SELECT u FROM Purchase u";
 	private static final String QUERY_READ_DAY_PURCHASES = "SELECT u FROM Purchase u WHERE u.dateDay = :dateDay";
 	private static final String QUERY_READ_ID_PURCHASE = "SELECT u FROM Purchase u WHERE u.id = :id";

@@ -53,8 +53,8 @@
 			</c:otherwise>
 		</c:choose>
 	</nav>
-
 	<!-- -------------- NAVBAR ----------------- -->
+
 	<div class="containerFlex">
 		<div id="elemCountWarning">
 			<!-- -------------- NUMBER OF WARNINGS ----------------- -->
@@ -91,7 +91,8 @@
 	</div>
 
 	<!-- -------------- CHARTS ----------------- -->
-	<div class="containerFlex" id="containerFlexCharts">
+	<div class="containerFlex" id="containerFlexCharts"
+		style="visibility: hidden">
 		<div class="containerElem">
 			<p class="title">Evolution</p>
 			<div class="container chart">
@@ -114,6 +115,12 @@
 	</div>
 	<!-- -------------- CHARTS ----------------- -->
 
+	<!-- -------------- FOOTER ----------------- -->
+	<footer>
+		<img id="logoAtos" src="inc/images/atosLogo.png">
+	</footer>
+	<!-- -------------- FOOTER ----------------- -->
+	
 	<!-- -------------- JS SCRIPT ----------------- -->
 	<script type="text/javascript" src="inc/jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="inc/popper/popper.min.js"></script>

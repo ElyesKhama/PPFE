@@ -174,7 +174,8 @@ function createListLabelsCounts(arrayWarning, valueSelected) {
 	if(valueSelected == "Amount"){
         	// creation of the list of different vouchers
         	for (var i = 0; i < arrayWarning.length; i++) {
-        		// TODO: see polyfill https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes#Polyfill
+        		// TODO: see polyfill
+			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes#Polyfill
         		if (!listLabels.includes(arrayWarning[i].voucherType)) {
         			listLabels.push(arrayWarning[i].voucherType);
         		}
@@ -242,7 +243,8 @@ function createChartPie(listVoucher, listCount) {
 			title : {
 				display : false,
 				text : 'Repartition of Warnings'
-			}
+			},
+			//onAnimationComplete: alert("chart pie finished")
 		}
 	});
 }

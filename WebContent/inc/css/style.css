@@ -119,6 +119,14 @@ body {
 	display: flex;
 }
 
+#logoAtos{
+	right: 0;
+	bottom: 0;
+	position: absolute;
+	height: 35px;
+	width: 110px;
+}
+
 #iconExclamation {
 	width: 50px;
 	height: 50px;

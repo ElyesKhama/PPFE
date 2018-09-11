@@ -13,8 +13,16 @@
 <link rel="stylesheet" type="text/css" href="inc/css/login.css" />
 </head>
 <body>
-				<c:out value="${restrict}"></c:out>
 
+	<!-- -------------- NAVBAR ----------------- -->
+	<nav class="navbar navbar-dark bg-dark">
+		<a class="navbar-brand" href="/PPFE/index"><img
+			src="inc/images/Logo.png" height="30" width="110"></a>
+	</nav>
+	<!-- -------------- NAVBAR ----------------- -->
+
+
+	<c:out value="${restrict}"></c:out>
 	<div class="container">
 		<div class="login-form">
 			<div class="main-div">
@@ -33,7 +41,7 @@
 					</div>
 					<button type="submit" class="btn btn-primary">Login</button>
 					<c:if test="${result == false}">
-						<span> Authentication failed </span>
+						<span class="error"> Authentication failed </span>
 					</c:if>
 				</form>
 			</div>

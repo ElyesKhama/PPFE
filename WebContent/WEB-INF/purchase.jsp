@@ -82,5 +82,10 @@
 	</div>
 	<!-- -------------- PURCHASE DAY AND PREVIOUS DAYS RECAP ----------------- -->
 
+	<!-- -------------- FOOTER ----------------- -->
+	<footer>
+		<img id="logoAtos" src="inc/images/atosLogo.png">
+	</footer>
+	<!-- -------------- FOOTER ----------------- -->
 </body>
 </html>
