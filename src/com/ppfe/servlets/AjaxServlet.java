@@ -13,6 +13,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ import com.ppfe.entities.Warning;
  * This class will create the JSON file
  * and return it
  */
+@WebServlet("/ajax")
 public class AjaxServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

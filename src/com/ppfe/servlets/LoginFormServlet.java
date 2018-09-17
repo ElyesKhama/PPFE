@@ -16,6 +16,7 @@ import com.ppfe.dao.UserDAO;
 import com.ppfe.entities.User;
 import com.ppfe.forms.LoginForm;
 
+@WebServlet("/login")
 public class LoginFormServlet extends HttpServlet {
 	// constants
 	private static final long serialVersionUID = 1L;

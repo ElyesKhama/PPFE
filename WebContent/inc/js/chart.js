@@ -18,7 +18,7 @@ function callAjax() {
 			document.getElementById("countWarningsDisplay").innerHTML = json.listWarnings.length;
 		}
 	};
-	xhttp.open("GET", "ajax?dateDay=" + valueSelectedDate, true);
+	xhttp.open("GET", "ajax?dateDay=" + valueSelectedDate, true);	//ajax call
 	xhttp.send();
 }
 

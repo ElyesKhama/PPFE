@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import com.ppfe.dao.WarningDAO;
 import com.ppfe.entities.Purchase;
 import com.ppfe.entities.Warning;
 
+@WebServlet("/purchase")
 public class PurchaseServlet extends HttpServlet {
 
 	// constants
