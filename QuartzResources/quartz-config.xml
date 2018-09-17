@@ -17,8 +17,8 @@
 				<group>MYTRIGGER_GROUP</group>
 				<job-name>JobCreateWarning</job-name>
 				<job-group>MYJOB_GROUP</job-group>
-				<!-- trigger every -->
-				<cron-expression>0 35 10 * * ?</cron-expression>
+				<!-- trigger every : -->
+				<cron-expression>0 13 09 * * ?</cron-expression>
 			</cron>
 		</trigger>
 	</schedule>

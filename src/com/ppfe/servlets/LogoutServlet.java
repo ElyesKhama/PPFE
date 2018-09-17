@@ -12,20 +12,22 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-
 @WebServlet("/logout")
-public class LogoutServlet extends HttpServlet{
+public class LogoutServlet extends HttpServlet {
+
+	// constants
+	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(IndexServlet.class);
-	
-    public static final String URL_REDIRECTION = "/PPFE/login";
+	public static final String URL_REDIRECTION = "/PPFE/login";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("--- Logout Servlet Reached ---");
-		HttpSession session = req.getSession();
-		session.invalidate();
-		
+		HttpSession session = req.getSession(); // recov the session
+		session.invalidate(); // destroy the session
+
+		// redirect to the login page
 		resp.sendRedirect(URL_REDIRECTION);
 	}
-	
+
 }

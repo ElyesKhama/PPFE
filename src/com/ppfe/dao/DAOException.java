@@ -1,5 +1,6 @@
 package com.ppfe.dao;
 
+//Custom exception for the DAO methods
 public class DAOException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

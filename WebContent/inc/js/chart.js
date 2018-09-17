@@ -1,18 +1,18 @@
-//TODO: Singleton Pattern see how to store the json
-
+//global variables
 var chartLine = null;
 var chartPie = null;
 var nbMaxVoucher = 10;
 
-function testAjax() {
-    
+//launch the ajax request
+function callAjax() {
+    	//recover the selected options
 	var valueSelectedDate = document.getElementById("selectDate").value;
 	var valueSelectFilterPie = document.getElementById("selectFilterChartPie").value;
 	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
+	xhttp.onreadystatechange = function() {		//when the ajax's reply comes:
 		if (this.readyState == 4 && this.status == 200) {
 			var json = JSON.parse(this.responseText);
-			sessionStorage.setItem("json",JSON.stringify(json));
+			sessionStorage.setItem("json",JSON.stringify(json));	//put into browser's storage (necessary to stringify)
 			updateTable(json.listWarnings);
 			manageCharts(json, valueSelectedDate, valueSelectFilterPie);
 			document.getElementById("countWarningsDisplay").innerHTML = json.listWarnings.length;
@@ -24,8 +24,8 @@ function testAjax() {
 
 function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
     
-    var listTest1 = json.listDayWarnings.reverse();
-    var listTest2 = json.listCountWarnings.reverse();
+    var list1 = json.listDayWarnings.reverse();
+    var list2 = json.listCountWarnings.reverse();
 
     if( chartPie == null){
 	var listPie = createListLabelsCounts(json.listWarnings, valueSelectFilterPie);
@@ -35,11 +35,8 @@ function manageCharts(json, valueSelectedDate, valueSelectFilterPie){
     if (valueSelectedDate == "Today") {
 	document.getElementById('containerFlexCharts').style.visibility='hidden';
     } else {
-	// updateChartLine(listTest1,listTest2,json);
-	createChartLine(listTest1,listTest2);
-
+	createChartLine(list1,list2);
 	updateChartPie(json, valueSelectFilterPie);
-	
 	document.getElementById('containerFlexCharts').style.visibility='visible';
     }   
 }
@@ -133,12 +130,11 @@ function fillBodyTable(arrayWarning) {
 		var col1 = line.insertCell(1);
 		var col2 = line.insertCell(2);
 		var col3 = line.insertCell(3);
-		// col0.innerHTML += arrayWarning[i].id;
 		col0.innerHTML += arrayWarning[i].id;
 		col1.innerHTML += arrayWarning[i].voucherType;
 		col2.innerHTML += arrayWarning[i].difference;
 		col3.innerHTML += arrayWarning[i].priority;
-		var link = "\'purchase?id="+arrayWarning[i].id+"\'";
+		var link = "\'purchase?id="+arrayWarning[i].id+"\'";	//set the purchase's link
 		var windowLocation = "window.location ="+link;
 		line.setAttribute("onclick",windowLocation);
 		line.classList.add("rowTable",".table-hover");
@@ -174,7 +170,7 @@ function createListLabelsCounts(arrayWarning, valueSelected) {
 	if(valueSelected == "Amount"){
         	// creation of the list of different vouchers
         	for (var i = 0; i < arrayWarning.length; i++) {
-        		// TODO: see polyfill
+        		// TODO: see polyfill if not working on IE
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes#Polyfill
         		if (!listLabels.includes(arrayWarning[i].voucherType)) {
         			listLabels.push(arrayWarning[i].voucherType);

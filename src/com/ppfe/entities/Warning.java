@@ -25,6 +25,7 @@ public class Warning {
 	private int countDifference;
 	@Column(name = "date_day")
 	private Date dateDay;
+	// Foreign key
 	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
 	@JoinColumn(name = "id_purchase")
 	private Purchase purchase;

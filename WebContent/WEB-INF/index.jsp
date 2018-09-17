@@ -17,7 +17,7 @@
 <!-- -------------- CSS SHEETS ----------------- -->
 
 </head>
-<body onload="testAjax()">
+<body onload="callAjax()">		<!--  When the page is loaded, do the ajax request -->
 	<!-- -------------- NAVBAR ----------------- -->
 	<nav class="navbar navbar-dark bg-dark">
 		<a class="navbar-brand" href="#"><img src="inc/images/Logo.png"
@@ -68,9 +68,9 @@
 			<!-- -------------- SELECT DATE ----------------- -->
 			<div>
 				<select class="custom-select" id="selectDate">
-					<option selected value="Today" onclick="testAjax()">Today</option>
-					<option value="Week" onclick="testAjax()">This week</option>
-					<option value="Month" onclick="testAjax()">This month</option>
+					<option selected value="Today" onclick="callAjax()">Today</option>
+					<option value="Week" onclick="callAjax()">This week</option>
+					<option value="Month" onclick="callAjax()">This month</option>
 				</select>
 			</div>
 			<!-- -------------- SELECT DATE ----------------- -->
@@ -133,10 +133,6 @@
 	});
     </script>
 
-	<!-- 	colour palette generator (for charts) -->
-	<script type="text/javascript">
-	var jsonTest = '${json}';
-    </script>
 	<script type="text/javascript" src="inc/js/aWapBE.js"></script>
 	<script type="text/javascript" src="inc/chartJs/Chart.min.js"></script>
 	<script type="text/javascript" src="inc/js/chart.js"></script>

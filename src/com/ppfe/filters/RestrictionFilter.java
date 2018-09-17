@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 //@WebFilter("/*")
 public class RestrictionFilter implements Filter {
 
+	//constants
 	private static final String ATT_SESSION_USER = "user";
 	private static final String LOGIN_PAGE = "/login";
 	

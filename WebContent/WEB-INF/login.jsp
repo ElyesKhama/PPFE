@@ -48,6 +48,12 @@
 		</div>
 	</div>
 
+	<!-- -------------- FOOTER ----------------- -->
+	<footer>
+		<img id="logoAtos" src="inc/images/atosLogo.png">
+	</footer>
+	<!-- -------------- FOOTER ----------------- -->
+	
 	<!-- -------------- JS SCRIPT ----------------- -->
 	<script type="text/javascript" src="inc/jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="inc/popper/popper.min.js"></script>

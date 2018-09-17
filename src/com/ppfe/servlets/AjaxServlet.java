@@ -21,9 +21,12 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.ppfe.dao.WarningDAO;
-import com.ppfe.entities.Purchase;
 import com.ppfe.entities.Warning;
 
+/*Servlet reached with JS's AJAX
+ * This class will create the JSON file
+ * and return it
+ */
 public class AjaxServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

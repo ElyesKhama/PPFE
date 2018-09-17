@@ -30,28 +30,28 @@ public class LoginForm {
 	public User loginUser(HttpServletRequest req, UserDAO userDao) {
 		User user = null;
 
-		//recover parameters sent in the form
+		// recover parameters sent in the form
 		String username = req.getParameter(INPUT_USERNAME);
 		String password = req.getParameter(INPUT_PASSWORD);
-		
-		//method to hash the password
+
+		// method to hash the password
 		String passwordHash = null;
 		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			MessageDigest digest = MessageDigest.getInstance("SHA-256"); // encrypting used : SHA-256
 			byte[] hash = digest.digest(password.getBytes());
 			passwordHash = DatatypeConverter.printHexBinary(hash);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//try to read the user in the DB
+
+		// try to read the user in the DB
 		user = userDao.read(username);
 
 		if (user != null) {
-			//found a user, : compare password
+			// found a user, : compare password
 			if (passwordHash.equalsIgnoreCase(user.getPassword())) {
-				success = true;	//connection ok
+				success = true; // connection ok
 			}
 		}
 		return user;
@@ -64,7 +64,4 @@ public class LoginForm {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	
-	
-
 }

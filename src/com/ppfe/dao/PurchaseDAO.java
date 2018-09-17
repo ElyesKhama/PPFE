@@ -13,20 +13,18 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.ppfe.entities.Purchase;
-import com.ppfe.servlets.IndexServlet;
 
 @Stateless
 public class PurchaseDAO {
-	// Injection of manager who makes the connection with the database
 
+	// Injection of manager who makes the connection with the database
 	@PersistenceContext(unitName = "db_ppfe_pu_purchase")
 	private EntityManager em;
-	
+
+	// constants
 	private static final String QUERY_READ_ALL_PURCHASES = "SELECT u FROM Purchase u";
 	private static final String QUERY_READ_DAY_PURCHASES = "SELECT u FROM Purchase u WHERE u.dateDay = :dateDay";
-	private static final String QUERY_READ_ID_PURCHASE = "SELECT u FROM Purchase u WHERE u.id = :id";
 	private static final String QUERY_READ_DATE_VOUCHER_PURCHASE = "SELECT u FROM Purchase u WHERE u.dateDay = :dateDay and voucherType.id = :id";
-
 
 	private static final Logger logger = LogManager.getLogger(PurchaseDAO.class);
 
@@ -39,22 +37,7 @@ public class PurchaseDAO {
 		}
 	}
 
-	//TODO: DELETE 
-	public Purchase read(Long id) throws DAOException {
-		Purchase purchase = null;
-
-		Query query = null;
-		try {
-			query = em.createQuery(QUERY_READ_ID_PURCHASE);
-			query.setParameter("id", id);
-
-			purchase = (Purchase) query.getSingleResult();
-		} catch (Exception e) {
-			throw new DAOException(e);
-		}
-		return purchase;
-	}
-
+	// read purchases into database for a specific date and id
 	public Purchase read(Date dateDay, Long idVoucher) {
 		Purchase purchase = null;
 		Query query = null;
@@ -68,7 +51,7 @@ public class PurchaseDAO {
 		}
 		return purchase;
 	}
-	// TODO: Modify : add genericity
+
 	public ArrayList<Purchase> read(String choice) throws DAOException {
 		logger.info("--- Read Purchases from Database ---");
 
@@ -78,7 +61,6 @@ public class PurchaseDAO {
 		// initialization of Calendar
 		Calendar calendar = Calendar.getInstance();
 		// Instantiation with date of Today
-		//TODO: getTimeMillis
 		java.util.Date dateUtil = calendar.getTime();
 		// Conversion into java.sql.Date instead of java.util.Date (needed for query)
 		Date dateSql = new Date(dateUtil.getTime());

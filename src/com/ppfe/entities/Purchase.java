@@ -23,6 +23,7 @@ public class Purchase {
 	private Date dateDay;
 	@Column(name = "count_total")
 	private int countTotal;
+	// Foreign key
 	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
 	@JoinColumn(name = "id_voucher")
 	private VoucherType voucherType;

@@ -19,7 +19,8 @@ import com.ppfe.entities.Purchase;
 import com.ppfe.entities.Warning;
 
 public class PurchaseServlet extends HttpServlet {
-	
+
+	// constants
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(IndexServlet.class);
 
@@ -27,7 +28,6 @@ public class PurchaseServlet extends HttpServlet {
 	private static final String ATT_WARNING = "warning";
 	private static final String ATT_PURCHASE_PREVIOUS_DAY = "previousPurchase";
 
-	
 	@EJB
 	private WarningDAO warningDao;
 	@EJB
@@ -36,24 +36,23 @@ public class PurchaseServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("--- Purchase Servlet Rreached ---");
-		
+
 		String paramId = req.getParameter("id");
-		logger.info("PARAM : : : "+paramId);
 		Warning warning = warningDao.read(Long.valueOf(paramId));
-		
+
 		Date date = warning.getDateDay();
-		
+
 		// initialization of Calendar
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH, -1);
-		
+		calendar.add(Calendar.DAY_OF_MONTH, -1); // previous day
+
 		date = new Date(calendar.getTimeInMillis());
 		Purchase purchase = purchaseDao.read(date, warning.getPurchase().getVoucherType().getId());
-		
+
 		req.setAttribute(ATT_PURCHASE_PREVIOUS_DAY, purchase);
 		req.setAttribute(ATT_WARNING, warning);
-		
-		this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);		
+
+		this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
 	}
-}	
+}

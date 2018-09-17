@@ -12,11 +12,11 @@ import javax.persistence.Query;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.ppfe.entities.Purchase;
 import com.ppfe.entities.Warning;
 
 @Stateless
 public class WarningDAO {
+	// constants
 	private static final Logger logger = LogManager.getLogger(WarningDAO.class);
 
 	private static final String QUERY_READ_WARNING = "SELECT w FROM Warning w";
@@ -37,7 +37,8 @@ public class WarningDAO {
 			throw new DAOException(e);
 		}
 	}
-	
+
+	// read THE warning into the databse with the specific ID
 	public Warning read(Long id) throws DAOException {
 		Warning warning = null;
 		Query query = null;
@@ -52,6 +53,7 @@ public class WarningDAO {
 		return warning;
 	}
 
+	// read all warnings into the database
 	public ArrayList<Warning> read() throws DAOException {
 		ArrayList<Warning> listWarnings = new ArrayList<Warning>();
 
@@ -66,6 +68,8 @@ public class WarningDAO {
 		return listWarnings;
 	}
 
+	// read all warnings for a period of a specific number of days (used for the
+	// number of warnings today/week/month)
 	public ArrayList<Warning> readDay(int nbDays) throws DAOException {
 		logger.info("--- Read Warning into Database ---");
 
@@ -76,7 +80,7 @@ public class WarningDAO {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, -nbDays);
 		Date dateParam = new Date(calendar.getTime().getTime());
-		
+
 		try {
 			query = em.createQuery(QUERY_READ_DAY_WARNING);
 			query.setParameter("dateDay", dateParam);
@@ -89,24 +93,24 @@ public class WarningDAO {
 
 	// method which count the number of warnings for the date_day : curdate - nbdays
 	public Long count(int nbDays) throws DAOException {
-		return utilCount(QUERY_COUNT_WARNING,nbDays);
+		return utilCount(QUERY_COUNT_WARNING, nbDays);
 	}
 
 	// method which count the total number of warnings during the last nbDays days
 	public Long countTotalPreviousDays(int nbDays) {
-		return utilCount(QUERY_COUNT_WARNING_NB_DAYS,nbDays);
+		return utilCount(QUERY_COUNT_WARNING_NB_DAYS, nbDays);
 	}
-	
+
 	public Long utilCount(String queryString, int nbDays) {
 		logger.info("--- Count Warning into Database ---");
 		Long count;
 		Query query = null;
-		
+
 		// initialization of Calendar
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, -nbDays);
 		Date dateParam = new Date(calendar.getTime().getTime());
-		
+
 		try {
 			query = em.createQuery(queryString);
 			query.setParameter("dateDay", dateParam);

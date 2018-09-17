@@ -17,18 +17,17 @@ import com.ppfe.entities.User;
 import com.ppfe.forms.LoginForm;
 
 public class LoginFormServlet extends HttpServlet {
+	// constants
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger logger = LogManager.getLogger(IndexServlet.class);
 
 	private static final String ATT_SESSION_USER = "user";
 	private static final String ATT_REQ_RESULT = "result";
 	private static final String VUE_INDEX = "/WEB-INF/login.jsp";
 
-	private static final long serialVersionUID = 1L;
-
 	@EJB
 	private UserDAO userDao;
-
-	private static final String ATT_USER = "user";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,22 +39,20 @@ public class LoginFormServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("--- Login Servlet Reached [POST] ---");
 
-		String username = req.getParameter("inputUsername");
-		
 		LoginForm form = new LoginForm();
-		User user = form.loginUser(req, userDao);
+		User user = form.loginUser(req, userDao); // try to log in
 		boolean success = form.isSuccess();
-		if (success == true) {
+		if (success == true) { // OK
 			logger.info("AUTENTIFICATION SUCCESSFUL");
 			HttpSession session = req.getSession();
 			session.setAttribute(ATT_SESSION_USER, user);
 			resp.sendRedirect(req.getContextPath() + "/index");
-		} else {
+		} else { // NOK
 			// ERROR DURING CONNECTION
 			logger.info("ERROR DURING AUTHENTIFICATION");
-			
+
 			req.setAttribute(ATT_REQ_RESULT, success);
-			
+
 			// print les erreurs
 			this.getServletContext().getRequestDispatcher(VUE_INDEX).forward(req, resp);
 		}

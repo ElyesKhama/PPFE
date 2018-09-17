@@ -11,13 +11,13 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.swing.JSpinner.DateEditor;
 
 import com.ppfe.entities.Warning;
 
 public class SendMail {
 
-	private static final String EMAIL_RECIPIENT = "elyesk@hotmail.fr";
+	//constants
+	private static final String EMAIL_RECIPIENT = "elyesk@hotmail.fr";		//mail attributes TODO: Change in terms of mail policy
 	private static final String EMAIL_SENDER = "elyes91620@gmail.com";
 	private static final String USERNAME = "elyes91620@gmail.com";
 	private static final String PASSWORD = "mvrpuaawauyrxdke";
